@@ -7,10 +7,10 @@ namespace Test
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
+
         private SpriteBatch _spriteBatch;
         
         private SpriteBatch _spriteBatch2;
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -44,7 +44,7 @@ namespace Test
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Red);
 
             // TODO: Add your drawing code here
 
