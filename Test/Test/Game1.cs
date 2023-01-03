@@ -32,7 +32,7 @@ namespace Test
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-
+            backgroundSprite = Content.Load<Texture2D>("manoir");
         }
 
         protected override void Update(GameTime gameTime)
