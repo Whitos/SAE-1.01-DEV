@@ -10,7 +10,7 @@ namespace Test
 
         private SpriteBatch _spriteBatch;
         
-        private SpriteBatch _spriteBatch2;
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
