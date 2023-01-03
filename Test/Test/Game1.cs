@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Tiled;
 
 namespace Test
 {
@@ -11,6 +12,7 @@ namespace Test
 
         private Texture2D backgroundSprite;
 
+        private TiledMap _TiledManoirEXT;
 
 
         public Game1()
