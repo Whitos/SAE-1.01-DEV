@@ -7,10 +7,12 @@ namespace Test
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-
         private SpriteBatch _spriteBatch;
-        
-        
+
+        private Texture2D backgroundSprite;
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -30,6 +32,7 @@ namespace Test
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
         }
 
         protected override void Update(GameTime gameTime)
