@@ -11,6 +11,8 @@ namespace Test
 
         private SpriteBatch _spriteBatch2;
 
+        private SpriteBatch _spriteBatch3;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
