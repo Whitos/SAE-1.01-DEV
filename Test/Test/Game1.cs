@@ -7,11 +7,10 @@ namespace Test
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
+
         private SpriteBatch _spriteBatch;
-
+        
         private SpriteBatch _spriteBatch2;
-
-        private SpriteBatch _spriteBatch3;
 
         public Game1()
         {
@@ -23,7 +22,7 @@ namespace Test
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Window.Title = "Nom de fenetre";
             base.Initialize();
         }
 
@@ -46,7 +45,7 @@ namespace Test
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Red);
 
             // TODO: Add your drawing code here
 
