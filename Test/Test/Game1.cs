@@ -44,12 +44,15 @@ namespace Test
 
             base.Update(gameTime);
         }
-
+        
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Red);
 
             // TODO: Add your drawing code here
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(backgroundSprite, new Vector2(0, 0), Color.White);
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
