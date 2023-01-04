@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tiled;
 
 namespace Test
@@ -14,7 +15,8 @@ namespace Test
 
         private TiledMap _TiledManoirEXT;
 
-
+        private Vector2 _positionPerso;
+        private AnimatedSprite _perso;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
