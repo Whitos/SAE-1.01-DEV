@@ -57,10 +57,10 @@ namespace Test
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
-            _perso = new AnimatedSprite(spriteSheet);
             backgroundSprite = Content.Load<Texture2D>("manoir");
 
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
+            _perso = new AnimatedSprite(spriteSheet);
             
         }
 
