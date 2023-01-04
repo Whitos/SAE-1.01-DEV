@@ -28,7 +28,6 @@ namespace Test
         private float _vitessePerso;
         private int _sensPersoX;
         private int _sensPersoY;
-        private string _animation;
 
         private KeyboardState _keyboardState;
 
@@ -46,10 +45,10 @@ namespace Test
 
             //personnage
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
             _positionPerso = new Vector2(20, 340);
             _vitesse = 70;
             _vitessePerso = 70;
-
             base.Initialize();
         }
 
@@ -58,10 +57,10 @@ namespace Test
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            backgroundSprite = Content.Load<Texture2D>("manoir");
-
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
+            backgroundSprite = Content.Load<Texture2D>("manoir");
+
             
         }
 
