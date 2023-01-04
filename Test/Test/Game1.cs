@@ -5,6 +5,7 @@ using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Renderers;
 using System;
 
 namespace Test
@@ -16,25 +17,21 @@ namespace Test
 
         private Texture2D backgroundSprite;
 
-        private TiledMap _TiledManoirEXT;
+        /*private TiledMap _TiledManoirEXT;
+        private TiledMapRenderer _tiledManoirRenderer;*/
+
 
         //personnage
         private Vector2 _positionPerso;
         private AnimatedSprite _perso;
-        private TiledMapTileLayer mapLayer;
-        private int vitesse;
-        String animation = "idle";
+        public float _vitesse;
+        private float _vitessePerso;
+        private int _sensPersoX;
+        private int _sensPersoY;
+        private string _animation;
 
-        private bool IsCollision(ushort x, ushort y)
-        {
-            // définition de tile qui peut être null (?)
-            TiledMapTile? tile;
-            if (mapLayer.TryGetTile(x, y, out tile) == false)
-                return false;
-            if (!tile.Value.IsBlank)
-                return true;
-            return false;
-        }
+        private KeyboardState _keyboardState;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -50,7 +47,9 @@ namespace Test
             //personnage
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _positionPerso = new Vector2(20, 340);
-            vitesse = 50;
+            _vitesse = 70;
+            _vitessePerso = 70;
+
             base.Initialize();
         }
 
@@ -60,68 +59,77 @@ namespace Test
 
             // TODO: use this.Content to load your game content here
             backgroundSprite = Content.Load<Texture2D>("manoir");
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("personnage.sf", new JsonContentLoader());
+
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
-            mapLayer = _TiledManoirEXT.GetLayer<TiledMapTileLayer>("obstacles");
+            
         }
 
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // TODO: Add your update logic here
+
+
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            float walkSpeed = deltaSeconds * vitesse; // Vitesse de déplacement du sprite
-            KeyboardState keyboardState = Keyboard.GetState();
+            float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
 
+            _keyboardState = Keyboard.GetState();
 
-            animation = "idle";
+            _sensPersoX = 0;
+            _sensPersoY = 0;
 
-            if (keyboardState.IsKeyDown(Keys.Up))
+            if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
             {
-                ushort tx = (ushort)(_positionPerso.X / _TiledManoirEXT.TileWidth);
-                ushort ty = (ushort)(_positionPerso.Y / _TiledManoirEXT.TileHeight - 1);
-                animation = "walkNorth";
-                if (!IsCollision(tx, ty))
-                    _positionPerso.Y -= walkSpeed;
+                _sensPersoX = 1;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Down))
+            //si fleche gauche
+            else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
             {
-                ushort tx = (ushort)(_positionPerso.X / _TiledManoirEXT.TileWidth);
-                ushort ty = (ushort)(_positionPerso.Y / _TiledManoirEXT.TileHeight + 1);
-                animation = "walkSouth";
-                if (!IsCollision(tx, ty))
-                    _positionPerso.Y += walkSpeed;
+                _sensPersoX = -1;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
             {
-                ushort tx = (ushort)(_positionPerso.X / _TiledManoirEXT.TileWidth);
-                ushort ty = (ushort)(_positionPerso.Y / _TiledManoirEXT.TileHeight + 1);
-                animation = "walkWest";
-                if (!IsCollision(tx, ty))
-                    _positionPerso.X -= walkSpeed;
+                _sensPersoY = -1;
             }
 
-            if (keyboardState.IsKeyDown(Keys.Right))
+            else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
             {
-                ushort tx = (ushort)(_positionPerso.X / _TiledManoirEXT.TileWidth);
-                ushort ty = (ushort)(_positionPerso.Y / _TiledManoirEXT.TileHeight + 1);
-                animation = "walkEast";
-                if (!IsCollision(tx, ty))
-                    _positionPerso.X += walkSpeed;
+                _sensPersoY = 1;
             }
 
-            // TODO: Add your update logic here
-            _TiledManoirEXT.Update(gameTime);
-            _perso.Play(animation); // une des animations définies dans « persoAnimation.sf »
-            _perso.Update(deltaSeconds); // time écoulé
+            _vitessePerso = _vitesse;
 
-            // TODO: Add your update logic here
-            _TiledManoirEXT.Update(gameTime);// une des animations définies dans « persoAnimation.sf »
-            _perso.Update(deltaSeconds); // time écoulé
-            base.Update(gameTime);
+            if (_sensPersoX != 0 && _sensPersoY != 0)
+                _vitessePerso = _vitesse / (float)Math.Sqrt(2);
+            else
+                _vitessePerso = _vitesse;
+
+            if (_sensPersoX == 0 && _sensPersoY == 0)
+                _perso.Play("idle");
+
+            else if (_sensPersoX == 1 && _sensPersoY == 0)
+                _perso.Play("walkEast");
+
+            else if (_sensPersoX == -1 && _sensPersoY == 0)
+                _perso.Play("walkWest");
+
+            //Si cest vers le bas = → && ↓ || ← && ↓ || 0 && ↓
+            else if (_sensPersoX == 1 && _sensPersoY == 1 || _sensPersoX == -1 && _sensPersoY == 1 || _sensPersoX == 0 && _sensPersoY == 1)
+                _perso.Play("walkSouth");
+
+            //Si cest vers le bas = → && ↑ || ← && ↑ || 0 && ↑
+            else if (_sensPersoX == 1 && _sensPersoY == -1 || _sensPersoX == -1 && _sensPersoY == -1 || _sensPersoX == 0 && _sensPersoY == -1)
+                _perso.Play("walkNorth");
+
+            _perso.Update(deltaSeconds);
+            _positionPerso.X += _sensPersoX * _vitessePerso * deltaSeconds;
+            _positionPerso.Y += _sensPersoY * _vitessePerso * deltaSeconds;
 
             base.Update(gameTime);
         }
@@ -133,12 +141,11 @@ namespace Test
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundSprite, new Vector2(0, 0), Color.White);
+
+            _spriteBatch.Draw(_perso, _positionPerso);
+
             _spriteBatch.End();
 
-            //personnage
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
