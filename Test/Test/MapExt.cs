@@ -18,10 +18,6 @@ namespace Test
 
         }
 
-        public override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.Red);
-        }
 
         public override void Update(GameTime gameTime)
         {
@@ -29,6 +25,10 @@ namespace Test
             {
                 Game.LoadMapExt();
             }
+        }
+        public override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Red);
         }
     }
 }

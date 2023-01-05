@@ -48,7 +48,7 @@ namespace Test
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Window.Title = "Nom de fenetre";
+            Window.Title = "EscapeGame2D";
 
             _screenManager = new ScreenManager();
 
