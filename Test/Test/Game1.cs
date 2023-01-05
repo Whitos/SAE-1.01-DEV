@@ -17,10 +17,6 @@ namespace Test
 
         private Texture2D backgroundSprite;
 
-        /*private TiledMap _TiledManoirEXT;
-        private TiledMapRenderer _tiledManoirRenderer;*/
-
-
         //personnage
         private Vector2 _positionPerso;
         private AnimatedSprite _perso;
