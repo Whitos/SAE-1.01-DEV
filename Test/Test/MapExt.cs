@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    public class MyScreen1 : GameScreen
+    public class MapExt : GameScreen
     {
         private new Game1 Game => (Game1)base.Game;
 
-        public MyScreen1(Game1 game) : base(game)
+        public MapExt(Game1 game) : base(game)
         {
 
         }

@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Content;
+using MonoGame.Extended.Screens;
+using MonoGame.Extended.Screens.Transitions;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tiled;
@@ -17,6 +19,9 @@ namespace Test
 
         private Texture2D backgroundSprite;
 
+        public SpriteBatch SpriteBatch { get; private set; }
+        private ScreenManager _screenManager;
+
         //personnage
         private Vector2 _positionPerso;
         private AnimatedSprite _perso;
@@ -25,6 +30,12 @@ namespace Test
         private int _sensPersoX;
         private int _sensPersoY;
 
+        //MapExt
+        //private TiledMap _tiledMap;
+        //private TiledMapRenderer _tiledMapRenderer;
+
+
+        //clavier 
         private KeyboardState _keyboardState;
 
         public Game1()
@@ -39,13 +50,28 @@ namespace Test
             // TODO: Add your initialization logic here
             Window.Title = "Nom de fenetre";
 
+            _screenManager = new ScreenManager();
+
             //personnage
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
-
             _positionPerso = new Vector2(20, 340);
             _vitesse = 70;
             _vitessePerso = 70;
+
+
+
             base.Initialize();
+        }
+
+        public void LoadScreen(GameScreen screen)
+        {
+            _screenManager.LoadScreen(screen, new FadeTransition(GraphicsDevice, Color.Black, .5f));
+
+        }
+
+        public void LoadMapExt()
+        {
+            LoadScreen(new MapExt(this));
         }
 
         protected override void LoadContent()
@@ -53,8 +79,16 @@ namespace Test
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            //fond menu
             backgroundSprite = Content.Load<Texture2D>("manoir");
 
+            //MAP EXT
+            LoadMapExt();
+            //_tiledMap = Content.Load<TiledMap>("mapGenerale");
+            //_tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+
+            //personnage
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
             
@@ -67,12 +101,13 @@ namespace Test
                 Exit();
 
             // TODO: Add your update logic here
-
+            //_tiledMapRenderer.Update(gameTime);
 
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
 
             _keyboardState = Keyboard.GetState();
+            _screenManager.Update(gameTime);
 
             _sensPersoX = 0;
             _sensPersoY = 0;
@@ -136,7 +171,9 @@ namespace Test
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             _spriteBatch.Draw(backgroundSprite, new Vector2(0, 0), Color.White);
-
+            
+            _screenManager.Draw(gameTime);
+           
             _spriteBatch.Draw(_perso, _positionPerso);
 
             _spriteBatch.End();
