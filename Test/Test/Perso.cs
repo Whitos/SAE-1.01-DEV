@@ -28,6 +28,7 @@ namespace Test
 
         public void LoadContent(Game game1)
         {
+
             SpriteSheet mike = game1.Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(mike);
         }
