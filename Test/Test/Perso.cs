@@ -15,20 +15,28 @@ namespace Test
     internal class Perso
     {
         //personnage
-        private Vector2 _positionPerso;
-        private AnimatedSprite _perso;
+        public Vector2 _positionPerso;
+        public AnimatedSprite _perso;
         public float _vitesse;
         private float _vitessePerso;
         private int _sensPersoX;
         private int _sensPersoY;
 
         private KeyboardState _keyboardState;
+        private Game1 game1;
 
-        public Vector2 Position { get => _positionPerso; set => _positionPerso = value; }
+        public Perso(Game1 game1)
+        {
+            this.game1 = game1;
+        }
+
+        public void Initialize()
+        {
+            _positionPerso = new Vector2(20, 340);
+        }
 
         public void LoadContent(Game game1)
         {
-
             SpriteSheet mike = game1.Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(mike);
         }

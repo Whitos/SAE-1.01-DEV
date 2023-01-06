@@ -14,32 +14,34 @@ namespace Test
 {
     internal class MapExt : GameScreen
     {
+      
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
-
-        private new Game1 Game => (Game1)base.Game;
+        private Game1 _game;
+        private Perso _perso;
+        
 
         public MapExt(Game1 game) : base(game)
         {
-
+            this._game = game;
+            this._perso = new Perso();
         }
 
         public override void LoadContent()
         {
-            //_spriteBatch = new SpriteBatch(GraphicsDevice);
-            _tiledMap = Content.Load<TiledMap>("mapGenerale");
+           
+            _tiledMap = Content.Load<TiledMap>("MapExt2");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-
         }
 
-
-        public override void Update(GameTime gameTime)
-        {
-            _tiledMapRenderer.Update(gameTime);
-        }
         public override void Draw(GameTime gameTime)
         {
-
+            GraphicsDevice.Clear(Color.White);
+            _tiledMapRenderer.Draw();
+        }
+        public override void Update(GameTime gameTime)
+        {
+            _tiledMapRenderer.Update(gameTime);          
         }
     }
 }

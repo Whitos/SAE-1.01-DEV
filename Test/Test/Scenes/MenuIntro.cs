@@ -13,7 +13,9 @@ namespace Test
     internal class MenuIntro : GameScreen
     {
         private Texture2D _manoir;
-        
+        private Texture2D _perso;
+        private Vector2 _positionPerso;
+        public SpriteBatch _spriteBatch;
 
         private new Game1 Game => (Game1)base.Game;
 
@@ -21,19 +23,21 @@ namespace Test
         {
 
         }
+
         public override void LoadContent()
         {
-            //_spriteBatch = new SpriteBatch(GraphicsDevice);
             _manoir = Content.Load<Texture2D>("manoir");
-
         }
-
 
         public override void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 Game.LoadMapExt();
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                Game.Exit();
             }
         }
         public override void Draw(GameTime gameTime)

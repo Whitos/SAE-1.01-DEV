@@ -16,7 +16,6 @@ namespace Test
     {
         private GraphicsDeviceManager _graphics;
         public SpriteBatch _spriteBatch;
-
         public SpriteBatch SpriteBatch { get; private set; }
         private ScreenManager _screenManager;
 
@@ -59,7 +58,7 @@ namespace Test
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
             LoadMenu();
-            LoadMapExt();           
+            LoadMapExt();
         }
 
         protected override void Update(GameTime gameTime)

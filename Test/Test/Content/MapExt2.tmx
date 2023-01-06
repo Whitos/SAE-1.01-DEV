@@ -9,9 +9,6 @@
  <tileset firstgid="2261" source="Voiture.tsx"/>
  <tileset firstgid="3559" source="voituretest.tsx"/>
  <tileset firstgid="4909" source="gate.tsx"/>
- <tileset firstgid="5509" name="boeRTaV" tilewidth="32" tileheight="32" tilecount="12" columns="3">
-  <image source="pesojeu1.png" width="100" height="130"/>
- </tileset>
  <layer id="1" name="HerbeBackgroud" width="30" height="20">
   <data encoding="csv">
 4015,4015,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,855,
