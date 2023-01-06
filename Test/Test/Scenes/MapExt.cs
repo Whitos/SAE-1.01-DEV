@@ -18,13 +18,11 @@ namespace Test
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
         private Game1 _game;
-        private Perso _perso;
         
 
         public MapExt(Game1 game) : base(game)
         {
             this._game = game;
-            this._perso = new Perso();
         }
 
         public override void LoadContent()
