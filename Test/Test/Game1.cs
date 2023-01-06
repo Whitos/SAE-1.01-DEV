@@ -15,7 +15,7 @@ namespace Test
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        public SpriteBatch _spriteBatch;
 
         public SpriteBatch SpriteBatch { get; private set; }
         private ScreenManager _screenManager;

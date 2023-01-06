@@ -13,7 +13,7 @@ namespace Test
     internal class MenuIntro : GameScreen
     {
         private Texture2D _manoir;
-        private SpriteBatch _spriteBatch;
+        
 
         private new Game1 Game => (Game1)base.Game;
 
@@ -21,11 +21,13 @@ namespace Test
         {
 
         }
-
-        public override void Draw(GameTime gameTime)
+        public override void LoadContent()
         {
-            _spriteBatch.Draw(_manoir, new Vector2(0,0), Color.White);
+            //_spriteBatch = new SpriteBatch(GraphicsDevice);
+            _manoir = Content.Load<Texture2D>("manoir");
+
         }
+
 
         public override void Update(GameTime gameTime)
         {
@@ -34,10 +36,11 @@ namespace Test
                 Game.LoadMapExt();
             }
         }
-        public override void LoadContent()
+        public override void Draw(GameTime gameTime)
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _manoir = Content.Load<Texture2D>("manoir");
+            Game._spriteBatch.Begin();
+            Game._spriteBatch.Draw(_manoir, new Vector2(0,0), Color.White);
+            Game._spriteBatch.End();
         }
     }
 }
