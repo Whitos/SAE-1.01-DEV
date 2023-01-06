@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Test
 {
-    internal class Perso
+    internal class Perso 
     {
         //personnage
         public Vector2 _positionPerso;
@@ -25,17 +25,19 @@ namespace Test
         private KeyboardState _keyboardState;
         private Game1 game1;
 
-        public Perso(Game1 game1)
+        public Perso(Game1 game1) 
         {
             this.game1 = game1;
+            Initialize();
+            LoadContent();
         }
 
         public void Initialize()
         {
-            _positionPerso = new Vector2(20, 340);
+            _positionPerso = new Vector2(150, 340);
         }
 
-        public void LoadContent(Game game1)
+        public void LoadContent()
         {
             SpriteSheet mike = game1.Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(mike);
@@ -46,6 +48,8 @@ namespace Test
             _keyboardState = Keyboard.GetState();
             _sensPersoX = 0;
             _sensPersoY = 0;
+
+
 
             if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
             {
@@ -96,11 +100,11 @@ namespace Test
             _positionPerso.X += _sensPersoX * _vitessePerso * deltaTime;
             _positionPerso.Y += _sensPersoY * _vitessePerso * deltaTime;
         }
-        public void Draw(SpriteBatch _spriteBatch)
+        public void Draw()
         {
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_perso, _positionPerso);
-            _spriteBatch.End();
+            game1._spriteBatch.Begin();
+            game1._spriteBatch.Draw(_perso, _positionPerso);
+            game1._spriteBatch.End();
         }
     }
 }
