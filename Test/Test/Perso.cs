@@ -35,6 +35,8 @@ namespace Test
         public void Initialize()
         {
             _positionPerso = new Vector2(150, 340);
+            _vitesse = 200;
+            _vitessePerso = 70;
         }
 
         public void LoadContent()
@@ -48,8 +50,6 @@ namespace Test
             _keyboardState = Keyboard.GetState();
             _sensPersoX = 0;
             _sensPersoY = 0;
-
-
 
             if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
             {
@@ -96,9 +96,9 @@ namespace Test
             else if (_sensPersoX == 1 && _sensPersoY == -1 || _sensPersoX == -1 && _sensPersoY == -1 || _sensPersoX == 0 && _sensPersoY == -1)
                 _perso.Play("walkNorth");
 
-            _perso.Update(deltaTime);
             _positionPerso.X += _sensPersoX * _vitessePerso * deltaTime;
             _positionPerso.Y += _sensPersoY * _vitessePerso * deltaTime;
+            _perso.Update(deltaTime);
         }
         public void Draw()
         {

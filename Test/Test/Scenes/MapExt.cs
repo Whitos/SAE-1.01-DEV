@@ -18,12 +18,14 @@ namespace Test
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
         private Game1 _game;
-        public SpriteBatch _spriteBatch;
         private Texture2D _perso;
         private Vector2 _positionPerso;
         private Perso personnage;
+        private string _animation;
+        private float _vitessePerso;
 
         private TiledMapTileLayer mapLayer;
+        private KeyboardState _keyboardState;
 
         public MapExt(Game1 game) : base(game)
         {
@@ -48,7 +50,11 @@ namespace Test
         {
             _tiledMapRenderer.Update(gameTime);           
             personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
-        }       
+
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float walkSpeed = deltaTime * _vitessePerso; // Vitesse de déplacement du sprite
+
+        }                  
     }
 }
 
