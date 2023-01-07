@@ -9,6 +9,8 @@ using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using System;
+using System.Text;
+using System.Collections.Generic;
 
 namespace Test
 {
@@ -33,7 +35,6 @@ namespace Test
         {
             // TODO: Add your initialization logic here
             Window.Title = "EscapeGame2D";
-            GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _screenManager = new ScreenManager();
             base.Initialize();
         }
@@ -67,6 +68,7 @@ namespace Test
                 Exit();
             // TODO: Add your update logic here      
             _screenManager.Update(gameTime);
+                       
             base.Update(gameTime);
         }
 
