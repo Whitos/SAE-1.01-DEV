@@ -21,8 +21,6 @@ namespace Test
         public SpriteBatch SpriteBatch { get; private set; }
         private ScreenManager _screenManager;
 
-        //clavier 
-        private KeyboardState _keyboardState;
 
         public Game1()
         {
@@ -60,6 +58,7 @@ namespace Test
             // TODO: use this.Content to load your game content here
             LoadMenu();
             LoadMapExt();
+            
         }
 
         protected override void Update(GameTime gameTime)

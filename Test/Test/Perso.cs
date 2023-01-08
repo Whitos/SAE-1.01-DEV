@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
+using MonoGame.Extended.Tiled;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,9 @@ namespace Test
         public float _vitesse;
         private float _vitessePerso;
         private Vector2 _sensPerso;
+        private TiledMap _tiledMap;
+        public TiledMapTileLayer _mapLayer;
+        public string animation;
 
         private KeyboardState _keyboardState;
         private Game1 game1;
@@ -29,6 +33,7 @@ namespace Test
             this.game1 = game1;
             Initialize();
             LoadContent();
+            
         }
 
         public void Initialize()
@@ -47,6 +52,7 @@ namespace Test
 
         public void Update(float deltaTime)
         {
+                    
 
             String animation = "idle";
 
@@ -72,7 +78,22 @@ namespace Test
             else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
             {
                 _sensPerso.Y = 1;
-                animation = "walkSouth";
+
+                float walkSpeed = deltaTime * _vitessePerso; // Vitesse de déplacement du sprite      
+                if (_keyboardState.IsKeyDown(Keys.Up))
+                {
+                    ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth);
+                    ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight + 1);
+                    Console.WriteLine("ouierrt");
+                    if (!IsCollision(tx, ty))
+                    {
+                        
+                        Console.WriteLine(_mapLayer.GetTile(tx,ty).GlobalIdentifier);
+                        Console.WriteLine("obstacles");
+                        _sensPerso.Y += walkSpeed;
+                    }
+                    animation = "walkSouth";
+                }
             }
             _vitessePerso = _vitesse;
             if (_sensPerso != Vector2.Zero)
@@ -81,6 +102,18 @@ namespace Test
             _positionPerso += _sensPerso * _vitessePerso * deltaTime;
             _perso.Play(animation);
             _perso.Update(deltaTime);
+        }
+        public bool IsCollision(ushort x, ushort y)
+        {
+            //// définition de tile qui peut être null (?)
+            TiledMapTileLayer _mapLayer = MapExt._tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
+            TiledMapTile? tile;
+            if (_mapLayer.TryGetTile(x, y, out tile))
+                return false;
+            if (!tile.Value.IsBlank)
+                return true;
+            else
+                return false;
         }
         public void Draw()
         {
