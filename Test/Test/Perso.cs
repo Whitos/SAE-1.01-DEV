@@ -33,7 +33,7 @@ namespace Test
             this.game1 = game1;
             Initialize();
             LoadContent();
-            
+         
         }
 
         public void Initialize()
