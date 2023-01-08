@@ -65,7 +65,8 @@ namespace Test
         public void Update(float deltaTime)
         {
             String animation = "idle";
-
+            ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth);
+            ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight);
             _keyboardState = Keyboard.GetState();
             _sensPerso = Vector2.Zero;
             float walkSpeed = deltaTime * _vitessePerso; // Vitesse de déplacement du sprite      
@@ -81,19 +82,17 @@ namespace Test
                 _sensPerso.X = -1;
                 animation = "walkWest";
             }
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)) || (_keyboardState.IsKeyDown(Keys.Left)) || ( _keyboardState.IsKeyDown(Keys.Right)))
+            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
             {
                 _sensPerso.Y = -1;
                 animation = "walkNorth";
                 if (_keyboardState.IsKeyDown(Keys.Down))
-                {
-                    ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth);
-                    ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight - 1);
+                {                    
 
+                    Console.WriteLine(_mapLayer.GetTile(tx, ty).GlobalIdentifier);
                     if (!IsCollision(tx, ty))
                     {
                         _sensPerso.Y -= walkSpeed;
-                        Console.WriteLine(_mapLayer.GetTile(tx,ty).GlobalIdentifier);
                     }
                 }
             }
@@ -104,8 +103,6 @@ namespace Test
 
                 if (_keyboardState.IsKeyDown(Keys.Up))
                 {
-                    ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth);
-                    ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight + 1);
                     if (!IsCollision(tx, ty))
                     {                        
                         _sensPerso.Y += walkSpeed;
