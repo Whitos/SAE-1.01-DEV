@@ -13,9 +13,6 @@ namespace Test
     internal class MenuIntro : GameScreen
     {
         private Texture2D _manoir;
-        private Texture2D _perso;
-        private Vector2 _positionPerso;
-        public SpriteBatch _spriteBatch;
 
         private new Game1 Game => (Game1)base.Game;
 
@@ -34,10 +31,6 @@ namespace Test
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 Game.LoadMapExt();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                Game.Exit();
             }
         }
         public override void Draw(GameTime gameTime)

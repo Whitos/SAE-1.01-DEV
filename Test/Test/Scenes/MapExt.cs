@@ -35,15 +35,13 @@ namespace Test
         public override void LoadContent()
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            MapExt._tiledMap = Content.Load<TiledMap>("MapExt2");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-            TiledMapTileLayer _mapLayer = MapExt._tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
         }
         
         public override void Update(GameTime gameTime)
         {
             _tiledMapRenderer.Update(gameTime);                 
-            personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds);           
+            personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds);              
         }
         
         public override void Draw(GameTime gameTime)

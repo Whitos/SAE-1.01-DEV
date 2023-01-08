@@ -58,7 +58,8 @@ namespace Test
             // TODO: use this.Content to load your game content here
             LoadMenu();
             LoadMapExt();
-            
+            MapExt._tiledMap = Content.Load<TiledMap>("MapExt2");
+            TiledMapTileLayer _mapLayer = MapExt._tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
         }
 
         protected override void Update(GameTime gameTime)
