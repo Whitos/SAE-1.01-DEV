@@ -16,6 +16,7 @@ namespace Test
     internal class Perso
     {
         //personnage
+        private const int TAILLE_SPRITE = 32;
         public Vector2 _positionPerso;
         public AnimatedSprite _perso;
         public float _vitesse;
@@ -28,6 +29,7 @@ namespace Test
 
         private KeyboardState _keyboardState;
         private Game1 game1;
+        private MapExt _map;
 
         public Perso(Game1 game1)
         {
@@ -36,14 +38,14 @@ namespace Test
             LoadContent();
         }
 
-        public Perso(TiledMapTileLayer _mapLayer)
-        {
-            this._mapLayer = _mapLayer;
-        }
 
         public Perso(TiledMap _tiledMap)
         {
             this._tiledMap = _tiledMap;
+        }
+        public Perso(TiledMapTileLayer _mapLayer)
+        {
+            this._mapLayer = _mapLayer;            
         }
 
         public void Initialize()
@@ -70,61 +72,60 @@ namespace Test
 
             if (_keyboardState.IsKeyDown(Keys.Right))
             {
-                _sensPerso.X = 1;
+                _sensPerso.X = 0;
                 ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth + 1);
                 ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight);
                 animation = "walkEast";
-                if (!IsCollision(tx, ty))
+                if (!IsCollision(tx, ty,_map))
                 {
-                    _sensPerso.X += walkSpeed;
+                    _sensPerso.X -= 1;
                 }
 
             }
             if (_keyboardState.IsKeyDown(Keys.Left))
             {
-                _sensPerso.X = 1;
+                _sensPerso.X = 0;
                 ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth - 1);
                 ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight);
                 animation = "walkWest";
-                if (!IsCollision(tx, ty))
+                if (!IsCollision(tx, ty,_map))
                 {
-                    _sensPerso.X -= walkSpeed;
+                    _sensPerso.X += 1;
                 }
             }
 
             if (_keyboardState.IsKeyDown(Keys.Up))
             {
-                _sensPerso.Y = 1;
+                _sensPerso.Y = 0;
                 ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth );
                 ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight + 1);
                 animation = "walkNorth";
-                if (!IsCollision(tx, ty))
+                if (!IsCollision(tx, ty,_map))
                 {
-                    _sensPerso.Y -= walkSpeed;
+                    _sensPerso.Y += 1;
                 }
             }
             if (_keyboardState.IsKeyDown(Keys.Down))
             {
-                _sensPerso.Y = 1;
+                _sensPerso.Y = 0;
                 ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth);
-                ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight - 1);
+                ushort ty = (ushort)((_positionPerso.Y + TAILLE_SPRITE / 2) / MapExt._tiledMap.TileHeight);
                 animation = "walkSouth";
-                if (!IsCollision(tx, ty))
+                if (!!IsCollision(tx, ty,_map))
                 {
-                    _sensPerso.Y += walkSpeed;
+                    _sensPerso.Y += 1;
                 }
             }
             _vitessePerso = _vitesse;
             if (_sensPerso != Vector2.Zero)
                 _sensPerso.Normalize();
 
-            _positionPerso += _sensPerso * _vitessePerso * deltaTime;
             _perso.Update(deltaTime);
             _perso.Play(animation);
-
-
+            _positionPerso.X -= _sensPerso.X * _vitessePerso * deltaTime;
+            _positionPerso.Y -= _sensPerso.Y * _vitessePerso * deltaTime;
         }
-        public bool IsCollision(ushort x, ushort y)
+        public bool IsCollision(ushort x, ushort y,MapExt _map)
         {
             //// définition de tile qui peut être null (?)
             TiledMapTileLayer _mapLayer = MapExt._tiledMap.GetLayer<TiledMapTileLayer>("obstacles");

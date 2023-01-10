@@ -23,20 +23,20 @@ namespace Test
         private Game1 _game;
         private Perso personnage;
 
-        private TiledMapTileLayer mapLayer;
+        private TiledMapTileLayer _mapLayer;
         private KeyboardState _keyboardState;
 
         public MapExt(Game1 game) : base(game)
         {
             this._game = game;
-            this.personnage = new Perso(game);           
+            this.personnage = new Perso(game);              
         }
 
         public override void LoadContent()
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
-            mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
+            _mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
         }
         
         public override void Update(GameTime gameTime)
