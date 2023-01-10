@@ -29,7 +29,7 @@ namespace Test
         public TiledMapTileLayer _mapLayer;
 
         private KeyboardState _keyboardState;
-        private Game1 game1;
+        public  Game1 game1;
         private MapExt _map;
 
         public Perso(Game1 game1)
@@ -163,9 +163,9 @@ namespace Test
         }
         public void Draw()
         {
-            game1._spriteBatch.Begin();
-            game1._spriteBatch.Draw(_perso, _positionPerso);
-            game1._spriteBatch.End();
+            Game1._spriteBatch.Begin();
+            Game1._spriteBatch.Draw(_perso, _positionPerso);
+            Game1._spriteBatch.End();
         }
     }
 }

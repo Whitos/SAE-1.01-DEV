@@ -17,16 +17,43 @@ namespace Test
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        public SpriteBatch _spriteBatch;
-        public SpriteBatch SpriteBatch { get; private set; }
+        public static SpriteBatch _spriteBatch;
+        public  SpriteBatch SpriteBatch { get; private set; }
         private ScreenManager _screenManager;
 
+        // on définit les différents états possibles du jeu ( à compléter) 
+        public enum Etats { Play, Options, Quit, Menu };
+
+        // on définit un champ pour stocker l'état en cours du jeu
+        private Etats etat;
+
+        // on définit  2 écrans ( à compléter )
+        private MenuIntro _screenMenu;
+        private Options _screenOptions;
+
+        private MapExt _screenJouer;
+        public Etats Etat
+        {
+            get
+            {
+                return this.etat;
+            }
+            set
+            {
+                this.etat = value;
+            }
+        }
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            _screenMenu = new MenuIntro(this);
+            _screenOptions = new Options(this);
+            _screenJouer = new MapExt(this);
+
         }
 
         protected override void Initialize()
@@ -34,6 +61,9 @@ namespace Test
             // TODO: Add your initialization logic here
             Window.Title = "EscapeGame2D";
             _screenManager = new ScreenManager();
+            _graphics.PreferredBackBufferWidth = 700;
+            _graphics.PreferredBackBufferHeight = 430;
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -50,12 +80,13 @@ namespace Test
         public void LoadMapExt()
         {
             LoadScreen(new MapExt(this));
-
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            // on charge l'écran de menu par défaut 
+            _screenManager.LoadScreen(_screenMenu, new FadeTransition(GraphicsDevice, Color.Black));
             // TODO: use this.Content to load your game content here
             LoadMenu();
             LoadMapExt();
@@ -67,9 +98,28 @@ namespace Test
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            // On teste le clic de souris et l'état pour savoir quelle action faire 
+            MouseState _mouseState = Mouse.GetState();
+            if (_mouseState.LeftButton == ButtonState.Pressed)
+            {
+                // Attention, l'état a été mis à jour directement par l'écran en question
+                if (this.Etat == Etats.Quit)
+                    Exit();
+
+                else if (this.Etat == Etats.Play)
+                    _screenManager.LoadScreen(_screenJouer, new FadeTransition(GraphicsDevice, Color.Black));
+
+                else if (this.Etat == Etats.Options)
+                    _screenManager.LoadScreen(_screenOptions, new FadeTransition(GraphicsDevice, Color.Black));
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Back))
+            {
+                if (this.Etat == Etats.Menu)
+                    _screenManager.LoadScreen(_screenMenu, new FadeTransition(GraphicsDevice, Color.Black));
+            }
             // TODO: Add your update logic here      
-            _screenManager.Update(gameTime);
-                       
+            _screenManager.Update(gameTime);                     
             base.Update(gameTime);
         }
 
@@ -79,6 +129,12 @@ namespace Test
             // TODO: Add your drawing code here           
             _screenManager.Draw(gameTime);
             base.Draw(gameTime);
+        }
+        public void TailleFenetre(int w, int h)
+        {
+            _graphics.PreferredBackBufferHeight = h;
+            _graphics.PreferredBackBufferWidth = w;
+            _graphics.ApplyChanges();
         }
     }
 }
