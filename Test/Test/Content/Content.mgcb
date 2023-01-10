@@ -52,6 +52,18 @@
 /processor:TiledMapTilesetProcessor
 /build:7.tsx
 
+#begin creepy.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:creepy.mp3
+
+#begin foret.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:foret.mp3
+
 #begin gate.jpg
 /importer:TextureImporter
 /processor:TextureProcessor

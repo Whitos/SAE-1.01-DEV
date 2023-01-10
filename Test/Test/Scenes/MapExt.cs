@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tiled;
@@ -37,8 +38,14 @@ namespace Test
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             _mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
+            MenuIntro._musique = Content.Load<Song>("foret");
+            MediaPlayer.Play(MenuIntro._musique);
         }
-        
+        public override void Initialize()
+        {
+            MediaPlayer.IsRepeating = true;
+        }
+
         public override void Update(GameTime gameTime)
         {
             personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds); 
