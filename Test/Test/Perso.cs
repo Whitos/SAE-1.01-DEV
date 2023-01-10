@@ -50,9 +50,8 @@ namespace Test
         {
             _positionPerso = new Vector2(150, 340);
             _sensPerso = new Vector2(0, 0);
-            _vitesse = 70;
+            _vitesse = 100;
             _vitessePerso = 70;
-
         }
 
         public void LoadContent()
@@ -65,48 +64,54 @@ namespace Test
         public void Update(float deltaTime)
         {
             String animation = "idle";
-            ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth);
-            ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight);
             _keyboardState = Keyboard.GetState();
             _sensPerso = Vector2.Zero;
             float walkSpeed = deltaTime * _vitessePerso; // Vitesse de déplacement du sprite      
 
-            if (_keyboardState.IsKeyDown(Keys.Right) && !(_keyboardState.IsKeyDown(Keys.Left)))
+            if (_keyboardState.IsKeyDown(Keys.Right))
             {
                 _sensPerso.X = 1;
+                ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth + 1);
+                ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight);
                 animation = "walkEast";
-            }
-            //si fleche gauche
-            else if (_keyboardState.IsKeyDown(Keys.Left) && !(_keyboardState.IsKeyDown(Keys.Right)))
-            {
-                _sensPerso.X = -1;
-                animation = "walkWest";
-            }
-            if (_keyboardState.IsKeyDown(Keys.Up) && !(_keyboardState.IsKeyDown(Keys.Down)))
-            {
-                _sensPerso.Y = -1;
-                animation = "walkNorth";
-                if (_keyboardState.IsKeyDown(Keys.Down))
-                {                    
+                if (!IsCollision(tx, ty))
+                {
+                    _sensPerso.X += walkSpeed;
+                }
 
-                    Console.WriteLine(_mapLayer.GetTile(tx, ty).GlobalIdentifier);
-                    if (!IsCollision(tx, ty))
-                    {
-                        _sensPerso.Y -= walkSpeed;
-                    }
+            }
+            if (_keyboardState.IsKeyDown(Keys.Left))
+            {
+                _sensPerso.X = 1;
+                ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth - 1);
+                ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight);
+                animation = "walkWest";
+                if (!IsCollision(tx, ty))
+                {
+                    _sensPerso.X -= walkSpeed;
                 }
             }
-            else if (_keyboardState.IsKeyDown(Keys.Down) && !(_keyboardState.IsKeyDown(Keys.Up)))
+
+            if (_keyboardState.IsKeyDown(Keys.Up))
             {
                 _sensPerso.Y = 1;
-                animation = "walkSouth";
-
-                if (_keyboardState.IsKeyDown(Keys.Up))
+                ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth );
+                ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight + 1);
+                animation = "walkNorth";
+                if (!IsCollision(tx, ty))
                 {
-                    if (!IsCollision(tx, ty))
-                    {                        
-                        _sensPerso.Y += walkSpeed;
-                    }
+                    _sensPerso.Y -= walkSpeed;
+                }
+            }
+            if (_keyboardState.IsKeyDown(Keys.Down))
+            {
+                _sensPerso.Y = 1;
+                ushort tx = (ushort)(_positionPerso.X / MapExt._tiledMap.TileWidth);
+                ushort ty = (ushort)(_positionPerso.Y / MapExt._tiledMap.TileHeight - 1);
+                animation = "walkSouth";
+                if (!IsCollision(tx, ty))
+                {
+                    _sensPerso.Y += walkSpeed;
                 }
             }
             _vitessePerso = _vitesse;
@@ -114,8 +119,8 @@ namespace Test
                 _sensPerso.Normalize();
 
             _positionPerso += _sensPerso * _vitessePerso * deltaTime;
-            _perso.Play(animation);
             _perso.Update(deltaTime);
+            _perso.Play(animation);
 
 
         }
@@ -123,6 +128,7 @@ namespace Test
         {
             //// définition de tile qui peut être null (?)
             TiledMapTileLayer _mapLayer = MapExt._tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
+            Console.WriteLine(_mapLayer.GetTile(x, y).GlobalIdentifier);
             TiledMapTile? tile;
             if (_mapLayer.TryGetTile((ushort)x,(ushort) y, out tile))
                 return false;

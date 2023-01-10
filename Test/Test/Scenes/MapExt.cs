@@ -36,12 +36,13 @@ namespace Test
         {
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+            mapLayer = _tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
         }
         
         public override void Update(GameTime gameTime)
         {
+            personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds); 
             _tiledMapRenderer.Update(gameTime);                 
-            personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds);              
         }
         
         public override void Draw(GameTime gameTime)

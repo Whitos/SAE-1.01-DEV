@@ -50,6 +50,7 @@ namespace Test
         public void LoadMapExt()
         {
             LoadScreen(new MapExt(this));
+
         }
 
         protected override void LoadContent()
@@ -59,7 +60,7 @@ namespace Test
             LoadMenu();
             LoadMapExt();
             MapExt._tiledMap = Content.Load<TiledMap>("MapExt2");
-            TiledMapTileLayer _mapLayer = MapExt._tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
+            TiledMapTileLayer mapLayer = MapExt._tiledMap.GetLayer<TiledMapTileLayer>("obstacles");
         }
 
         protected override void Update(GameTime gameTime)
