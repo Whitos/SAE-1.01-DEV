@@ -77,7 +77,6 @@ namespace Test
         public void LoadMapExt() // chargement MapExt
         {
             LoadScreen(new MapExt(this));
-
         }
 
         protected override void LoadContent()
@@ -113,8 +112,7 @@ namespace Test
                     _screenManager.LoadScreen(_screenOptions, new FadeTransition(GraphicsDevice, Color.Black));
             }
             // TODO: Add your update logic here      
-            _screenManager.Update(gameTime);
-                       
+            _screenManager.Update(gameTime);                     
             base.Update(gameTime);
         }
 

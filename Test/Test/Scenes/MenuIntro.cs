@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Test
 {
     internal class MenuIntro : GameScreen
@@ -26,7 +27,7 @@ namespace Test
 
         private Texture2D _manoir;
         public static Song _musique;
-
+        public Game1 _game;
         private new Game1 Game => (Game1)base.Game;
 
         public MenuIntro(Game1 game) : base(game)
