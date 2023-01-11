@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Screens;
@@ -17,10 +17,7 @@ namespace Test
         private Game1 _game;
         public static Rectangle[] lesBoutons;
         public static Texture2D _textBoutons;
-
-        public Options(Game game) : base(game)
-        {
-        }
+        
         public Options(Game1 game) : base(game)
         {
             _game = game;
@@ -36,7 +33,6 @@ namespace Test
         public override void LoadContent()
         {
             _textBoutons = Content.Load<Texture2D>("MenuOptions");
-            base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
@@ -66,4 +62,3 @@ namespace Test
         }
     }
 }
-
