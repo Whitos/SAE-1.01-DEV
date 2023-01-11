@@ -7,6 +7,7 @@ using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using MonoGame.Extended.Timers;
+using Project1;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,19 +19,19 @@ namespace Test
 {
     internal class MapExt : GameScreen
     {
-      
+
         public static TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
-        private Game1 _game1;
+        private Game1 _game;
         private Perso personnage;
 
         private TiledMapTileLayer _mapLayer;
-
+        //private KeyboardState _keyboardState;
 
         public MapExt(Game1 game) : base(game)
         {
-            _game1 = game;
-            personnage = new Perso(game);              
+            this._game = game;
+            this.personnage = new Perso(game);
         }
 
         public override void LoadContent()
@@ -44,14 +45,15 @@ namespace Test
         public override void Initialize()
         {
             MediaPlayer.IsRepeating = true;
+            Initialize();
         }
 
         public override void Update(GameTime gameTime)
         {
-            personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds); 
-            _tiledMapRenderer.Update(gameTime);                 
+            personnage.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _tiledMapRenderer.Update(gameTime);
         }
-        
+
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
@@ -60,4 +62,3 @@ namespace Test
         }
     }
 }
-
