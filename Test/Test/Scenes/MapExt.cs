@@ -25,8 +25,6 @@ namespace Test
         private Perso personnage;
 
         private TiledMapTileLayer _mapLayer;
-        private KeyboardState _keyboardState;
-
         public MapExt(Game1 game) : base(game)
         {
             this._game = game;

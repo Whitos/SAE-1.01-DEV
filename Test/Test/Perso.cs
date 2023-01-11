@@ -23,13 +23,12 @@ namespace Test
         public float _vitesse;
         private float _vitessePerso;
         private Vector2 _sensPerso;
-        public string animation;
 
         private TiledMap _tiledMap;
         public TiledMapTileLayer _mapLayer;
 
         private KeyboardState _keyboardState;
-        private Game1 game1;
+        public  Game1 game1;
         private MapExt _map;
 
         public Perso(Game1 game1)
@@ -59,8 +58,8 @@ namespace Test
 
         public void LoadContent()
         {
-            Perso perso = new Perso(_mapLayer);
             SpriteSheet mike = game1.Content.Load<SpriteSheet>("Personnage.sf", new JsonContentLoader());
+            Perso perso = new Perso(_mapLayer);
             _perso = new AnimatedSprite(mike);
         }
 
@@ -163,9 +162,9 @@ namespace Test
         }
         public void Draw()
         {
-            game1._spriteBatch.Begin();
-            game1._spriteBatch.Draw(_perso, _positionPerso);
-            game1._spriteBatch.End();
+            game1.spriteBatch.Begin();
+            game1.spriteBatch.Draw(_perso, _positionPerso);
+            game1.spriteBatch.End();
         }
     }
 }
